@@ -24,7 +24,7 @@ tracks/0/keys = {
 script = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-scale = Vector2( 0.1875, 0.1875 )
+scale = Vector2( 0.113281, 0.113281 )
 texture = ExtResource( 1 )
 hframes = 6
 

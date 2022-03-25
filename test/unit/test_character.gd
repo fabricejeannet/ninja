@@ -2,8 +2,8 @@ extends "res://addons/gut/test.gd"
 
 var Character = load("res://scripts/Character.gd")
 var Dot = load("res://scripts/Dot.gd")
-var FireBall = load("res://scripts/FireBall.gd")
-
+var FireBall = load("res://scenes/FireBall.tscn")
+var World = load("res://scenes/TestWorld.tscn")
 var hero
 
 func before_each():
@@ -42,12 +42,15 @@ func test_dot_decreases_health_when_ticking():
 	dot.tick()
 	assert_eq(hero.get_health_points(), 86)
 
+
 func test_character_mana_equals_max_mana():
 	assert_eq(hero.get_mana_points(), hero.get_max_mana_points())
+
 
 func test_using_mana_decreases_total_mana():
 	hero.use_mana_points(10)
 	assert_eq(hero.get_mana_points(), hero.get_max_mana_points() - 10)
+
 
 func test_cannot_use_more_mana_than_what_is_left():
 	hero.use_mana_points(90)
@@ -55,16 +58,6 @@ func test_cannot_use_more_mana_than_what_is_left():
 	hero.use_mana_points(11)
 	assert_eq(hero.get_mana_points(), 10)
 
-#func test_can_add_a_fir_ball_child() -> void :
-#	var fire_ball = FireBall.new()
-#	hero.shot_fire_ball()
-#	assert_true(hero.is_a_parent_of(fire_ball))
-
-#func test_can_prepare_to_shoot_a_fire_ball() -> void:
-#	var fire_ball = FireBall.new()
-#	hero.prepare_to_cast(fire_ball)
-#	assert_true(hero.is_a_parent_of(fire_ball))
-#	assert_eq(hero.get_prepared_spell(), fire_ball)
 
 func test_sets_direction_according_to_motion() -> void :
 	var motion = Vector2(0,0)
@@ -102,9 +95,22 @@ func test_sets_direction_according_to_motion() -> void :
 	motion = Vector2(1, 1)
 	hero.set_orientation_according_to(motion)
 	assert_eq(hero.get_orientation(), hero.Orientations.EAST)
-	
-	
-	
+
+
+func test_can_prepare_to_shoot_a_fire_ball() -> void:
+	hero.prepare_to_cast(FireBall)
+	assert_eq(hero.get_prepared_spell(), FireBall)
+
+func test_casting_a_spell_decreases_mana_points() -> void:
+	var world = World.instance()
+	world.add_child(hero)
+	hero.prepare_to_cast(FireBall)
+	assert_eq(hero.get_mana_points(), hero.get_max_mana_points())
+	hero.cast(Vector2(1,1))
+	assert_eq(hero.get_mana_points(), hero.get_mana_points() - FireBall.get_cost())
+
+
+
 #func test_mana_increases_when_mana_timer_ticks() -> void:
 
 	

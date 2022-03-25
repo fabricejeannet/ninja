@@ -1,11 +1,12 @@
 extends "res://addons/gut/test.gd"
 
-var FireBall = load("res://scripts/FireBall.gd")
+var FireBall = load("res://scenes/FireBall.tscn")
 var fire_ball
 
 func before_each() -> void:
-	fire_ball = FireBall.new()
-	fire_ball._ready()
+	fire_ball = FireBall.instance()
+
+
 
 func test_fire_ball_has_a_cost() -> void :
 	assert_true (fire_ball.get_cost() > 0)
