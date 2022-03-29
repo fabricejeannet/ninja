@@ -13,36 +13,40 @@ enum Orientations {
 var orientation
 
 export var max_health_points = 100 setget set_max_health_points, get_max_health_points 
-export var max_mana_points = 100 setget set_max_mana_points, get_max_mana_points
+export var max_mana_points = 100
 export var mana_recovery_rate = 0.1
 export var health_recovery_rate = 0.1
 
 var health_points = 100 setget set_health_points, get_health_points
-var mana_points setget set_mana_points, get_mana_points
+
 var prepared_spell
 
 var animation_player:AnimationPlayer
 
 var can_fire:bool = true
 
+
 onready var FireBall = preload("res://scenes/FireBall.tscn")
-onready var mana_timer = $ManaTimer
+
 onready var health_timer = $HealthTimer
 onready var sight = $Sight/Sprite
-onready var mana_bar = $Control/ManaBar
-onready var health_bar = $Control/HealthBar
 
+onready var health_bar = $Control/HealthBar
+onready var mana_bar = $Control/ManaBar
+
+onready var mana:ManaNode = $ManaNode
 
 func _ready():
 	animation_player = get_node("AnimationPlayer")
-	
-	mana_timer.wait_time = 1.0
-	mana_timer.connect("timeout", self, "recover_mana")
-	
+
+	mana.connect("mana_updated", mana_bar, "update_values")
+
+
+
 	health_timer.wait_time = 1.0
 	health_timer.connect("timeout", self, "recover_health")
 	
-	set_mana_points(max_mana_points)
+
 	set_health_points(max_health_points)
 	
 	prepare_to_cast(FireBall)
@@ -127,39 +131,6 @@ func set_max_health_points(hp:int) -> void:
 	health_bar.max_value = max_health_points
 
 
-func get_mana_points() -> int :
-	return mana_points
-
-
-func set_mana_points(mana:int) -> void:
-	mana_points = mana
-	mana_bar.value = mana_points
-
-
-func get_max_mana_points() -> int :
-	return max_mana_points
-
-
-func set_max_mana_points(mana:int) :
-	max_mana_points = mana
-	mana_bar.max_value = max_mana_points
-
-
-func increase_mana(value:int) -> void:
-	set_mana_points(mana_points + value)
-
-
-func consume_mana(value:int) -> void:
-	set_mana_points(mana_points - value)
-	mana_timer.start()
-
-
-func recover_mana() -> void :
-	increase_mana(mana_recovery_rate * max_mana_points)
-	if mana_points >= max_mana_points:
-		mana_timer.stop()
-
-
 func get_animation_player() -> AnimationPlayer:
 	return animation_player;
 
@@ -187,13 +158,6 @@ func heal(amount:int) -> void:
 		set_health_points(get_max_health_points())
 
 
-func has_enough_mana_to_cast(spell:Spell) -> bool:
-	return spell.get_cost() <= get_mana_points()
-
-
-func get_mana_timer() -> Timer :
-	return mana_timer
-
 func get_orientation() :
 	return orientation
 
@@ -216,12 +180,15 @@ func get_prepared_spell():
 
 
 func cast(mouse_pointer:Vector2) -> void:
+	
 	if !can_fire :
 		return
 
+
 	var instance = prepared_spell.instance()
 	
-	if !has_enough_mana_to_cast(instance) :
+	if !mana.is_enough_to_cast(instance.get_cost()) :
+		print("Not enough mana (" + str(mana.current_points) + "), cannot cast spell (" + str(instance.get_cost()) + ")!")
 		return
 		
 	get_parent().call_deferred("add_child",instance)
@@ -231,7 +198,7 @@ func cast(mouse_pointer:Vector2) -> void:
 	instance.set_motion((mouse_pointer - position).normalized())
 	instance.set_shot(true)
 	
-	consume_mana(instance.get_cost())
+	mana.consume(instance.get_cost())
 	
 	can_fire = false
 	yield(get_tree().create_timer(0.2), "timeout")
