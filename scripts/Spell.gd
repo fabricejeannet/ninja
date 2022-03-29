@@ -11,8 +11,9 @@ var motion:Vector2
 func _physics_process(delta):
 	if is_shot():
 		#warning-ignore:return_value_discarded
-		move_and_collide(motion * MOTION_SPEED * delta)
-
+		var collision = move_and_collide(motion * MOTION_SPEED * delta)
+		if collision:
+			call_deferred("queue_free")
 
 func get_cost() -> int:
 	return cost

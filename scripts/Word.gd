@@ -1,5 +1,7 @@
 extends TileMap
 
+onready var player = get_parent().get_node("Sasuke")
+
 func _input(event):
 	if event is InputEventMouseButton:
-		$Sasuke.cast(event.position)
+		player.cast(event.position)
