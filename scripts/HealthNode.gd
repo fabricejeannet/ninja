@@ -1,29 +1,28 @@
 extends Node
-class_name ManaNode
+class_name HealthNode
 
-signal mana_updated
+signal health_updated
 
 export var recovery_rate:float
 export var max_points:int
 
 var current_points:int
 
-
-onready var mana_timer = $ManaTimer
+onready var health_timer = $HealthTimer
 
 
 func _ready() -> void:
 	_set_current_points(max_points)
-	print("Initializing mana node. Max : " + str(max_points) + " current : " + str(current_points))
+	print("Initializing health node. Max : " + str(max_points) + " current : " + str(current_points))
 
 func get_max_points() -> int :
 	return max_points
 
 
-func set_max_points(mana:int) :
-	max_points = mana
-	print("Max mana points is now " + str(max_points))
-	emit_signal("mana_updated", max_points, current_points)
+func set_max_points(max_health:int) :
+	max_points = max_health
+	print("Max health points is now " + str(max_points))
+	emit_signal("health_updated", max_points, current_points)
 
 
 func increase(value:int) -> void:
@@ -36,18 +35,14 @@ func consume(value:int) -> void:
 
 func _set_current_points(value:int) -> void:
 	current_points = value
-	emit_signal("mana_updated", max_points, current_points)
-	mana_timer.start()
+	emit_signal("health_updated", max_points, current_points)
+	health_timer.start()
 
 
 func recover() -> void :
 	increase(recovery_rate * max_points)
 	if current_points >= max_points:
-		mana_timer.stop()
-
-
-func is_enough_to_cast(value:int) -> bool:
-	return value <= current_points
+		health_timer.stop()
 
 
 

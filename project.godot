@@ -20,6 +20,11 @@ _global_script_classes=[ {
 "path": "res://scripts/FireBall.gd"
 }, {
 "base": "Node",
+"class": "HealthNode",
+"language": "GDScript",
+"path": "res://scripts/HealthNode.gd"
+}, {
+"base": "Node",
 "class": "ManaNode",
 "language": "GDScript",
 "path": "res://scripts/ManaNode.gd"
@@ -32,6 +37,7 @@ _global_script_classes=[ {
 _global_script_class_icons={
 "Dot": "",
 "FireBall": "",
+"HealthNode": "",
 "ManaNode": "",
 "Spell": ""
 }

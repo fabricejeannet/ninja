@@ -1,6 +1,6 @@
 extends TileMap
 
-onready var player = get_parent().get_node("Sasuke")
+onready var player = get_parent().get_node("YSort/Sasuke")
 
 func _input(event):
 	if event is InputEventMouseButton:
