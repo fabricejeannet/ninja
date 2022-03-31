@@ -168,3 +168,6 @@ max_points = 100
 [node name="HeatlhNode" parent="." instance=ExtResource( 8 )]
 recovery_rate = 0.1
 max_points = 100
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true

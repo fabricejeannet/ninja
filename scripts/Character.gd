@@ -121,24 +121,32 @@ func get_prepared_spell():
 	return prepared_spell
 
 
+func _input(event):
+	if event is InputEventMouseButton:
+		cast(event.position)
+
+
+
 func cast(mouse_pointer:Vector2) -> void:
 	if !can_fire :
 		return
 		
 	var instance = prepared_spell.instance()
+
 	
 	if !mana.is_enough_to_cast(instance.get_cost()) :
 		print("Not enough mana (" + str(mana.current_points) + "), cannot cast spell (" + str(instance.get_cost()) + ")!")
 		return
 		
-	get_parent().call_deferred("add_child",instance)
-	instance.position = sight.global_position
-	instance.rotate(get_angle_to(mouse_pointer))
+
+	get_tree().get_root().add_child(instance)
+	instance.global_position = sight.global_position
+	instance.rotate(get_angle_to(sight.global_position))
 	instance.get_node("SpellAnimationPlayer").play("shooting")
-	instance.set_motion((mouse_pointer - position).normalized())
-	instance.set_shot(true)
+	instance.set_motion((sight.global_position - position).normalized())
 	instance.cast()
-	
+
+		
 	mana.consume(instance.get_cost())
 	
 	can_fire = false
