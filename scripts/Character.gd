@@ -29,7 +29,7 @@ func _ready():
 	#warning-ignore:return_value_discarded
 	health.connect("health_updated", health_bar, "update_values")	
 	prepare_to_cast(FireBall)
-
+#	prepare_to_cast(Henge)
 
 func _physics_process(_delta):
 	var motion = compute_motion()
@@ -123,11 +123,11 @@ func get_prepared_spell():
 
 func _input(event):
 	if event is InputEventMouseButton:
-		cast(event.position)
+		cast()
 
 
 
-func cast(mouse_pointer:Vector2) -> void:
+func cast() -> void:
 	if !can_fire :
 		return
 		
@@ -140,11 +140,8 @@ func cast(mouse_pointer:Vector2) -> void:
 		
 
 	get_tree().get_root().add_child(instance)
-	instance.global_position = sight.global_position
-	instance.rotate(get_angle_to(sight.global_position))
-	instance.get_node("SpellAnimationPlayer").play("shooting")
-	instance.set_motion((sight.global_position - position).normalized())
-	instance.cast()
+
+	instance.cast(self, sight.global_position)
 
 		
 	mana.consume(instance.get_cost())

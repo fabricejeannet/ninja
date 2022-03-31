@@ -6,7 +6,7 @@ onready var fire_particles = $Particles2D
 
 
 func _on_Area2D_body_entered(body):
-	if body is FireBall:
+	if body is FireBallKB2D:
 		print ("Hit by a fire ball")
 		fire_particles.visible = true
 		on_fire = true

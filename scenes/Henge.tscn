@@ -1,12 +1,20 @@
-[gd_scene load_steps=3 format=2]
+[gd_scene load_steps=4 format=2]
 
 [ext_resource path="res://scripts/Henge.gd" type="Script" id=1]
 [ext_resource path="res://assets/img/buche.png" type="Texture" id=2]
+[ext_resource path="res://scripts/HengeRigidBody2D.gd" type="Script" id=3]
 
-[node name="Henge" type="KinematicBody2D"]
+[node name="Henge" type="Node2D"]
 script = ExtResource( 1 )
+cost = 10
 
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( 0, 50 )
+[node name="LogRB2D" type="StaticBody2D" parent="."]
+script = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="LogRB2D"]
 scale = Vector2( 0.0820734, 0.0820735 )
 texture = ExtResource( 2 )
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LogRB2D"]
+position = Vector2( 0, -50 )
+polygon = PoolVector2Array( -19, 51, -9, 45, -12, 32, 0, 41, 7, 38, 18, 43, 18, 58, -7, 70, -19, 63 )

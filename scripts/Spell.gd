@@ -1,5 +1,5 @@
 class_name Spell
-extends KinematicBody2D
+extends Node2D
 
 export var cost:int = 15 setget set_cost, get_cost
 

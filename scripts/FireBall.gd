@@ -1,32 +1,9 @@
 extends Spell
 class_name FireBall
 
-const MOTION_SPEED = 300 # Pixels/second.
-var shot:bool = false setget set_shot, is_shot
-var motion:Vector2
-var animation_player
-
-
-func _physics_process(delta):
-	if is_shot():
-		#warning-ignore:return_value_discarded
-		var collision = move_and_collide(motion * MOTION_SPEED * delta)
-#		if collision :
-#			call_deferred("queue_free")
-
-
-func is_shot() -> bool :
-	return shot
-
-
-func set_shot(_shot:bool) -> void:
-	shot = _shot
-
-
-func set_motion(_motion:Vector2) -> void:
-	motion = _motion
-
-func cast() -> void:
-	animation_player = get_node("SpellAnimationPlayer")
-	animation_player.play("shooting")
-	set_shot(true)
+func cast(character:KinematicBody2D, mouse_pointer:Vector2) -> void:
+	var kb2d = $KinematicBody2D
+	kb2d.global_position = mouse_pointer
+	kb2d.rotate(mouse_pointer.angle_to_point(character.global_position))
+	kb2d.set_motion((mouse_pointer - character.global_position).normalized())
+	kb2d.set_shot(true)

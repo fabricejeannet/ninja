@@ -1,8 +1,9 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://assets/img/spritesheet/fireball.png" type="Texture" id=1]
 [ext_resource path="res://scripts/FireBall.gd" type="Script" id=2]
 [ext_resource path="res://assets/img/particles/fire_particle.png" type="Texture" id=3]
+[ext_resource path="res://scripts/FireBallKinematicBody2D.gd" type="Script" id=4]
 
 [sub_resource type="Animation" id=1]
 resource_name = "shooting"
@@ -49,26 +50,27 @@ linear_accel_random = 1.0
 damping = 2.0
 color = Color( 0.945098, 0.192157, 0.0431373, 1 )
 
-[node name="FireBall" type="KinematicBody2D"]
+[node name="FireBall" type="Node2D"]
 script = ExtResource( 2 )
-cost = 5
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="KinematicBody2D" type="KinematicBody2D" parent="."]
+script = ExtResource( 4 )
+
+[node name="Sprite" type="Sprite" parent="KinematicBody2D"]
 visible = false
 scale = Vector2( 0.113281, 0.113281 )
 texture = ExtResource( 1 )
 hframes = 6
 
-[node name="SpellAnimationPlayer" type="AnimationPlayer" parent="."]
+[node name="SpellAnimationPlayer" type="AnimationPlayer" parent="KinematicBody2D"]
 anims/shooting = SubResource( 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-visible = false
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
 position = Vector2( 4, 0 )
 rotation = 1.5708
 shape = SubResource( 2 )
 
-[node name="Particles2D" type="Particles2D" parent="."]
+[node name="Particles2D" type="Particles2D" parent="KinematicBody2D"]
 material = SubResource( 6 )
 rotation = 4.71239
 scale = Vector2( 0.5, 0.8 )
