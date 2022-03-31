@@ -121,9 +121,6 @@ anims/walk_up = SubResource( 4 )
 position = Vector2( 0, 4 )
 shape = SubResource( 9 )
 
-[node name="SpellPoint" type="Node2D" parent="."]
-position = Vector2( 0, 60 )
-
 [node name="Sight" type="Line2D" parent="."]
 points = PoolVector2Array( 0, 0, 50, 0 )
 width = 0.0
@@ -146,6 +143,7 @@ __meta__ = {
 [node name="HealthBar" type="ProgressBar" parent="Control"]
 margin_right = 55.0
 margin_bottom = 14.0
+rect_scale = Vector2( 1, 0.8 )
 custom_styles/fg = SubResource( 8 )
 script = ExtResource( 5 )
 __meta__ = {
@@ -156,6 +154,7 @@ __meta__ = {
 margin_top = 16.0
 margin_right = 55.0
 margin_bottom = 14.0
+rect_scale = Vector2( 1, 0.8 )
 custom_styles/fg = SubResource( 7 )
 script = ExtResource( 5 )
 __meta__ = {

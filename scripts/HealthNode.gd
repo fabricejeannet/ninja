@@ -40,7 +40,7 @@ func _set_current_points(value:int) -> void:
 
 
 func recover() -> void :
-	increase(recovery_rate * max_points)
+	increase(int(recovery_rate * float(max_points)))
 	if current_points >= max_points:
 		health_timer.stop()
 

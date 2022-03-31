@@ -12,14 +12,10 @@ enum Orientations {
 
 var orientation
 var prepared_spell
-#var animation_player:AnimationPlayer
-
 var can_fire:bool = true
 
-
 onready var FireBall = preload("res://scenes/FireBall.tscn")
-
-
+onready var Henge = preload("res://scenes/Henge.tscn")
 onready var sight = $Sight/Sprite
 onready var health_bar:ProgressBar = $Control/HealthBar
 onready var mana_bar:ProgressBar = $Control/ManaBar
@@ -28,11 +24,11 @@ onready var health:HealthNode = $HeatlhNode
 onready var animation_player:AnimationPlayer = $AnimationPlayer
 
 func _ready():
+	#warning-ignore:return_value_discarded
 	mana.connect("mana_updated", mana_bar, "update_values")
-	health.connect("health_updated", health_bar, "update_values")
-	
+	#warning-ignore:return_value_discarded
+	health.connect("health_updated", health_bar, "update_values")	
 	prepare_to_cast(FireBall)
-	takes_damage(70)
 
 
 func _physics_process(_delta):
@@ -126,11 +122,9 @@ func get_prepared_spell():
 
 
 func cast(mouse_pointer:Vector2) -> void:
-	
 	if !can_fire :
 		return
-
-
+		
 	var instance = prepared_spell.instance()
 	
 	if !mana.is_enough_to_cast(instance.get_cost()) :
@@ -143,6 +137,7 @@ func cast(mouse_pointer:Vector2) -> void:
 	instance.get_node("SpellAnimationPlayer").play("shooting")
 	instance.set_motion((mouse_pointer - position).normalized())
 	instance.set_shot(true)
+	instance.cast()
 	
 	mana.consume(instance.get_cost())
 	

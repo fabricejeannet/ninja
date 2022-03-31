@@ -5,9 +5,9 @@
 [ext_resource path="res://scripts/SmallTree.gd" type="Script" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 6.08276
+radius = 7.07107
 
-[sub_resource type="CanvasItemMaterial" id=2]
+[sub_resource type="CanvasItemMaterial" id=6]
 blend_mode = 1
 
 [sub_resource type="Curve" id=3]
@@ -19,20 +19,19 @@ _data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 214.054 ), -96.7984, 0.0,
 curve = SubResource( 3 )
 
 [sub_resource type="ParticlesMaterial" id=5]
-emission_shape = 1
-emission_sphere_radius = 8.0
 flag_disable_z = true
-gravity = Vector3( 0, -26, 0 )
+gravity = Vector3( 0, -40, 0 )
 angular_velocity = 1.0
 angular_velocity_curve = SubResource( 4 )
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
-linear_accel = 50.0
+linear_accel = 100.0
 linear_accel_random = 1.0
 damping = 2.0
 color = Color( 0.945098, 0.192157, 0.0431373, 1 )
 
 [node name="SmallTree" type="StaticBody2D"]
+position = Vector2( 0, 64 )
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -47,11 +46,11 @@ shape = SubResource( 1 )
 [node name="Area2D" type="Area2D" parent="."]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D"]
-polygon = PoolVector2Array( -6, 64, 9, 64, 5, 33, 34, 22, 40, -17, -1, -60, -40, -12, -32, 21, -16, 28, -4, 33 )
+polygon = PoolVector2Array( -8, 67, 10, 67, 9, 35, 34, 22, 40, -17, 21, -45, -1, -60, -10, -57, -43, -8, -32, 21, -6, 35 )
 
 [node name="Particles2D" type="Particles2D" parent="."]
 visible = false
-material = SubResource( 2 )
+material = SubResource( 6 )
 process_material = SubResource( 5 )
 texture = ExtResource( 2 )
 
