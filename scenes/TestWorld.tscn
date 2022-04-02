@@ -6,6 +6,9 @@
 [ext_resource path="res://scripts/ReplaceTrees.gd" type="Script" id=5]
 
 [node name="TestWorld" type="Node2D"]
+__meta__ = {
+"_edit_vertical_guides_": [  ]
+}
 
 [node name="Floor" type="TileMap" parent="."]
 tile_set = ExtResource( 1 )
@@ -25,3 +28,52 @@ cell_y_sort = true
 format = 1
 tile_data = PoolIntArray( 196713, 0, 0, 327699, 0, 0, 458764, 0, 0, 524324, 0, 0, 655363, 0, 0, 655412, 0, 0, 786456, 0, 0, 917523, 0, 0, 983056, 0, 0, 1245223, 0, 0, 1441808, 0, 0, 1507363, 0, 0, 1572870, 0, 0, 1572910, 0, 0, 1638425, 0, 0 )
 script = ExtResource( 5 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -20.0
+margin_top = -40.0
+margin_right = 20.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/Control"]
+margin_right = 500.0
+margin_bottom = 60.0
+color = Color( 0.403922, 0.403922, 0.419608, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/Control/ColorRect"]
+margin_left = 10.0
+margin_top = 10.0
+margin_right = 490.0
+margin_bottom = 50.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/Control/ColorRect/MarginContainer"]
+margin_right = 480.0
+margin_bottom = 40.0
+
+[node name="Button" type="Button" parent="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer"]
+margin_right = 48.0
+margin_bottom = 40.0
+text = "Katon"
+
+[node name="Button2" type="Button" parent="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer"]
+margin_left = 52.0
+margin_right = 105.0
+margin_bottom = 40.0
+text = "Henge"
+
+[connection signal="pressed" from="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer/Button" to="YSort/Sasuke" method="_on_katon_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer/Button2" to="YSort/Sasuke" method="_on_henge_button_pressed"]

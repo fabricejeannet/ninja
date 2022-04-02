@@ -1,12 +1,27 @@
 extends Spell
 class_name Henge
 
+export var duration:int = 5
+
 func cast(character:KinematicBody2D, mouse_pointer:Vector2) -> void:
 	var logRB2D = $LogRB2D
-	var hero = get_node("Sasuke")
+	var sprite = $LogRB2D/Sprite
+	var animation_player = $LogRB2D/AnimationPlayer
+	
 	print("Henge !")
 	logRB2D.position = character.global_position
+	animation_player.play("SmokeBomb")
 	character.visible = false
-	logRB2D.visible = true
+	character.can_move = false
+	sprite.visible = true
 
-	
+	yield(get_tree().create_timer(duration), "timeout")
+	animation_player.play("SmokeBomb")
+	sprite.visible = false
+	character.can_move = true
+	character.visible = true
+	yield(animation_player,"animation_finished")
+	call_deferred("queue_free")
+
+
+

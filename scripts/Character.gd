@@ -13,6 +13,7 @@ enum Orientations {
 var orientation
 var prepared_spell
 var can_fire:bool = true
+var can_move:bool = true
 
 onready var FireBall = preload("res://scenes/FireBall.tscn")
 onready var Henge = preload("res://scenes/Henge.tscn")
@@ -28,8 +29,6 @@ func _ready():
 	mana.connect("mana_updated", mana_bar, "update_values")
 	#warning-ignore:return_value_discarded
 	health.connect("health_updated", health_bar, "update_values")	
-	prepare_to_cast(FireBall)
-#	prepare_to_cast(Henge)
 
 func _physics_process(_delta):
 	var motion = compute_motion()
@@ -40,6 +39,10 @@ func _physics_process(_delta):
 
 
 func compute_motion() -> Vector2:
+	
+	if !can_move:
+		return Vector2(0,0)
+		
 	var motion = Vector2()
 	motion.x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
 	motion.y = Input.get_action_strength("ui_down") - Input.get_action_strength("ui_up")
@@ -121,32 +124,40 @@ func get_prepared_spell():
 	return prepared_spell
 
 
-func _input(event):
+
+func _unhandled_input(event):
 	if event is InputEventMouseButton:
 		cast()
-
 
 
 func cast() -> void:
 	if !can_fire :
 		return
+	
+	if !prepared_spell:
+		return 	
 		
 	var instance = prepared_spell.instance()
-
 	
 	if !mana.is_enough_to_cast(instance.get_cost()) :
 		print("Not enough mana (" + str(mana.current_points) + "), cannot cast spell (" + str(instance.get_cost()) + ")!")
 		return
 		
-
 	get_tree().get_root().add_child(instance)
-
 	instance.cast(self, sight.global_position)
-
-		
 	mana.consume(instance.get_cost())
 	
 	can_fire = false
 	yield(get_tree().create_timer(0.2), "timeout")
 	can_fire = true
 
+
+
+func _on_katon_button_pressed():
+	print("Katon prepared.")
+	prepare_to_cast(FireBall)
+
+func _on_henge_button_pressed():
+	print("Casting Henge")
+	prepare_to_cast(Henge)
+	cast()

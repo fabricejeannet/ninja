@@ -1,8 +1,25 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/Henge.gd" type="Script" id=1]
 [ext_resource path="res://assets/img/buche.png" type="Texture" id=2]
 [ext_resource path="res://scripts/HengeRigidBody2D.gd" type="Script" id=3]
+[ext_resource path="res://assets/img/spritesheet/Smoke VFX 2.png" type="Texture" id=4]
+
+[sub_resource type="Animation" id=1]
+resource_name = "SmokeBomb"
+length = 0.9
+tracks/0/type = "value"
+tracks/0/path = NodePath("LogRB2D/Smoke:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8 ]
+}
 
 [node name="Henge" type="Node2D"]
 script = ExtResource( 1 )
@@ -15,6 +32,10 @@ script = ExtResource( 3 )
 scale = Vector2( 0.0820734, 0.0820735 )
 texture = ExtResource( 2 )
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="LogRB2D"]
-position = Vector2( 0, -50 )
-polygon = PoolVector2Array( -19, 51, -9, 45, -12, 32, 0, 41, 7, 38, 18, 43, 18, 58, -7, 70, -19, 63 )
+[node name="AnimationPlayer" type="AnimationPlayer" parent="LogRB2D"]
+root_node = NodePath("../..")
+anims/SmokeBomb = SubResource( 1 )
+
+[node name="Smoke" type="Sprite" parent="LogRB2D"]
+texture = ExtResource( 4 )
+hframes = 13
