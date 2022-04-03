@@ -75,5 +75,12 @@ margin_right = 105.0
 margin_bottom = 40.0
 text = "Henge"
 
+[node name="Button3" type="Button" parent="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer"]
+margin_left = 109.0
+margin_right = 173.0
+margin_bottom = 40.0
+text = "Bunshin"
+
 [connection signal="pressed" from="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer/Button" to="YSort/Sasuke" method="_on_katon_button_pressed"]
 [connection signal="pressed" from="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer/Button2" to="YSort/Sasuke" method="_on_henge_button_pressed"]
+[connection signal="pressed" from="CanvasLayer/Control/ColorRect/MarginContainer/HBoxContainer/Button3" to="YSort/Sasuke" method="_on_bunshin_button_pressed"]

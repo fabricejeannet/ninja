@@ -17,6 +17,7 @@ var can_move:bool = true
 
 onready var FireBall = preload("res://scenes/FireBall.tscn")
 onready var Henge = preload("res://scenes/Henge.tscn")
+onready var Bunshin = preload("res://scenes/Bunshin.tscn")
 onready var sight = $Sight/Sprite
 onready var health_bar:ProgressBar = $Control/HealthBar
 onready var mana_bar:ProgressBar = $Control/ManaBar
@@ -161,3 +162,9 @@ func _on_henge_button_pressed():
 	print("Casting Henge")
 	prepare_to_cast(Henge)
 	cast()
+	
+func _on_bunshin_button_pressed():
+	print("Casting Bunshin")
+	prepare_to_cast(Bunshin)
+
+	
