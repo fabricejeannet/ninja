@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://scripts/Bunshin.gd" type="Script" id=1]
 [ext_resource path="res://assets/img/spritesheet/Smoke VFX 2.png" type="Texture" id=2]
@@ -89,11 +89,14 @@ tracks/0/keys = {
 "values": [ 24, 25, 26, 27, 28, 29, 30, 31 ]
 }
 
+[sub_resource type="CircleShape2D" id=10]
+radius = 6.0
+
 [sub_resource type="Animation" id=8]
 resource_name = "SmokeBomb"
 length = 1.2
 tracks/0/type = "value"
-tracks/0/path = NodePath("Smoke:frame")
+tracks/0/path = NodePath("../SmokeKB2D/Smoke:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -105,9 +108,14 @@ tracks/0/keys = {
 "values": [ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 ]
 }
 
+[sub_resource type="CapsuleShape2D" id=9]
+radius = 17.0
+height = 36.0
+
 [node name="Bunshin" type="Node2D"]
 script = ExtResource( 1 )
 duration = 5
+position_offset_coeff = Vector2( 2, 2 )
 
 [node name="KinematicBody2D" type="KinematicBody2D" parent="."]
 script = ExtResource( 4 )
@@ -125,9 +133,19 @@ texture = ExtResource( 3 )
 hframes = 8
 vframes = 4
 
-[node name="Smoke" type="Sprite" parent="KinematicBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="KinematicBody2D"]
+shape = SubResource( 10 )
+
+[node name="SmokeKB2D" type="KinematicBody2D" parent="."]
+
+[node name="Smoke" type="Sprite" parent="SmokeKB2D"]
 texture = ExtResource( 2 )
 hframes = 13
 
-[node name="APSmoke" type="AnimationPlayer" parent="KinematicBody2D"]
+[node name="APSmoke" type="AnimationPlayer" parent="SmokeKB2D"]
+root_node = NodePath("../../KinematicBody2D")
 anims/SmokeBomb = SubResource( 8 )
+
+[node name="cs_environment" type="CollisionShape2D" parent="SmokeKB2D"]
+position = Vector2( 0, 4 )
+shape = SubResource( 9 )
