@@ -14,18 +14,25 @@ var orientation
 var prepared_spell
 var can_fire:bool = true
 var can_move:bool = true
+var has_focus:bool = true
+
+var health_bar:ProgressBar
+var mana_bar:ProgressBar
 
 onready var FireBall = preload("res://scenes/FireBall.tscn")
 onready var Henge = preload("res://scenes/Henge.tscn")
 onready var Bunshin = preload("res://scenes/Bunshin.tscn")
 onready var sight = $Sight/Sprite
-onready var health_bar:ProgressBar = $Control/HealthBar
-onready var mana_bar:ProgressBar = $Control/ManaBar
 onready var mana:ManaNode = $ManaNode
 onready var health:HealthNode = $HeatlhNode
+
+
 onready var animation_player:AnimationPlayer = $AnimationPlayer
 
 func _ready():
+	mana_bar = get_parent().get_parent().get_node("CharacterStats/Control/ManaBar")
+	health_bar =  get_parent().get_parent().get_node("CharacterStats/Control/HealthBar")
+	
 	#warning-ignore:return_value_discarded
 	mana.connect("mana_updated", mana_bar, "update_values")
 	#warning-ignore:return_value_discarded
@@ -36,7 +43,8 @@ func _physics_process(_delta):
 	set_orientation_according_to(motion)
 	play_animation_corresponding_to_orientation()
 	#warning-ignore:return_value_discarded
-	move_and_slide(motion)
+	if has_focus:
+		move_and_slide(motion)
 
 
 func compute_motion() -> Vector2:

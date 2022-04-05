@@ -10,7 +10,7 @@ var position_offset:Vector2
 export var duration:int 
 export var position_offset_coeff:Vector2
 
-func cast(_character:KinematicBody2D, mouse_pointer:Vector2) -> void:
+func cast(_character:KinematicBody2D, _mouse_pointer:Vector2) -> void:
 	
 	character = _character
 	bunshin = $KinematicBody2D
@@ -33,5 +33,5 @@ func destroy() -> void :
 
 	call_deferred("free")
 
-func _process(delta):
+func _process(_delta):
 	bunshin.position = character.position + position_offset

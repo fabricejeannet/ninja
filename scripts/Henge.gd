@@ -3,7 +3,7 @@ class_name Henge
 
 export var duration:int = 5
 
-func cast(character:KinematicBody2D, mouse_pointer:Vector2) -> void:
+func cast(character:KinematicBody2D, _mouse_pointer:Vector2) -> void:
 	var logRB2D = $LogRB2D
 	var sprite = $LogRB2D/Sprite
 	var animation_player = $LogRB2D/AnimationPlayer
