@@ -2,7 +2,7 @@ extends Node
 
 var network = NetworkedMultiplayerENet.new()
 
-export var server_ip:String = "127.0.0.1"
+export var server_ip:String = "10.0.0.7"
 export var port:int = 1909
 
 func _ready():
@@ -21,4 +21,8 @@ func _on_connection_failed() -> void:
 func _on_connection_succeeded() -> void:
 	print("Succesfuly connected")
 	
+func fetch_spell_damage(spell_name, requester):
+	rpc_id(1, "fetch_spell_damage", spell_name, requester)
 	
+remote func return_spell_damage(var damage_from_server, requester) :
+	instance_from_id(requester).set_damage(damage_from_server)

@@ -72,9 +72,13 @@ config/name="Ninja"
 run/main_scene="res://scenes/TestWorld.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Server="*res://scripts/server/Server.gd"
+
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/gut/plugin.cfg" )
+enabled=PoolStringArray(  )
 
 [global]
 
