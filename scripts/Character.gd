@@ -14,11 +14,11 @@ var orientation
 var prepared_spell
 var can_fire:bool = true
 var can_move:bool = true
-var has_focus:bool = true
+var has_focus:bool
 
 var health_bar:ProgressBar
 var mana_bar:ProgressBar
-
+ 
 onready var FireBall = preload("res://scenes/FireBall.tscn")
 onready var Henge = preload("res://scenes/Henge.tscn")
 onready var Bunshin = preload("res://scenes/Bunshin.tscn")
@@ -37,13 +37,14 @@ func _ready():
 	mana.connect("mana_updated", mana_bar, "update_values")
 	#warning-ignore:return_value_discarded
 	health.connect("health_updated", health_bar, "update_values")	
-
+	set_focus(true)
+	
 func _physics_process(_delta):
-	var motion = compute_motion()
-	set_orientation_according_to(motion)
-	play_animation_corresponding_to_orientation()
-	#warning-ignore:return_value_discarded
 	if has_focus:
+		var motion = compute_motion()
+		set_orientation_according_to(motion)
+		play_animation_corresponding_to_orientation()
+		#warning-ignore:return_value_discarded
 		move_and_slide(motion)
 
 
@@ -161,7 +162,6 @@ func cast() -> void:
 	can_fire = true
 
 
-
 func _on_katon_button_pressed():
 	print("Katon prepared.")
 	prepare_to_cast(FireBall)
@@ -175,4 +175,7 @@ func _on_bunshin_button_pressed():
 	print("Casting Bunshin")
 	prepare_to_cast(Bunshin)
 
-	
+
+func set_focus(value:bool) -> void:
+	has_focus = value
+	$Focus.visible = has_focus

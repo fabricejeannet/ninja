@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/grass.tres" type="TileSet" id=1]
 [ext_resource path="res://scenes/Sasuke.tscn" type="PackedScene" id=2]
 [ext_resource path="res://scripts/ProgressBar.gd" type="Script" id=3]
 [ext_resource path="res://resources/trees.tres" type="TileSet" id=4]
 [ext_resource path="res://scripts/ReplaceTrees.gd" type="Script" id=5]
+[ext_resource path="res://scripts/Main.gd" type="Script" id=6]
 
 [sub_resource type="StyleBoxFlat" id=1]
 bg_color = Color( 0.054902, 0.843137, 0.0823529, 1 )
@@ -13,6 +14,7 @@ bg_color = Color( 0.054902, 0.843137, 0.0823529, 1 )
 bg_color = Color( 0.0509804, 0.505882, 0.752941, 1 )
 
 [node name="TestWorld" type="Node2D"]
+script = ExtResource( 6 )
 __meta__ = {
 "_edit_vertical_guides_": [ 10.0, 110.0 ]
 }
